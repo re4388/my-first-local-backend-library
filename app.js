@@ -9,8 +9,7 @@ var compression = require("compression");
 var helmet = require("helmet");
 
 
-app.use(compression()); // Compress all routes, set up before route code
-app.use(helmet());
+
 
 
 //route 
@@ -22,12 +21,15 @@ var catalogRouter = require('./routes/catalog');  //Import routes for "catalog" 
 
 var app = express();   //輸入變數app, 後面都會用到，最重要的物件
 
+app.use(compression()); // Compress all routes, set up before route code
+app.use(helmet());
+
 
 //Set up mongoose connection
 //creates the default connection to the database and 
 //binds to the error event (so that errors will be printed to the console). 
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb://re4388:211aoxjgju@ds149732.mlab.com:49732/local_library';
+var mongoDB = process.env.MONGODB_URI || 'mongodb://re4388:211aoxjgju@ds149732.mlab.com:49732/local_library';
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
